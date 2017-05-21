@@ -1,8 +1,12 @@
 import requests
 import re
 import time
+import Server
+import threading
+from Fuctions import get_file_name
 import urllib
 import queue
+
 
 def cut_string(input_str, head, tail):
     if isinstance(
@@ -24,6 +28,7 @@ def cut_string(input_str, head, tail):
 
 
 url_m = "https://bbs.meizu.cn/forum.php?mod=viewthread&tid=6591622&extra=&highlight=%E8%87%AA%E8%A1%8C%E8%BD%A6%E6%B6%82%E8%A3%85&page=1000"
+url_m = "https://bbs.meizu.cn/thread-6616035-999999-1.html"
 
 
 def get_img_url(url):
@@ -41,10 +46,11 @@ def get_img_url(url):
 old_matches = get_img_url(url_m)
 print(old_matches)
 
+
 while True:
     # 10S delay
     old = time.time()
-    while time.time() - old < 30:
+    while time.time() - old < 5:
         pass
 
     new_matches = get_img_url(url_m)
@@ -59,7 +65,10 @@ while True:
             # the page has been append some new img
             for u in new_matches:
                 if u not in old_matches:
+                    u = str(u).replace("\"", "")
                     new_img.append(u)
+                    with open("new_img", mode="w")as file:
+                        file.writelines(u)
         elif len(new_matches) == len(old_matches):
             # no new IMG
             print("No New.")
@@ -71,10 +80,7 @@ while True:
 
         for u in new_img:
 
-            u=str(u).replace("\"","")
-
-            def get_file_name(url):
-                return re.findall(r"/forum/.*", url)[0][18::]
+            u = str(u).replace("\"", "")
 
             r = requests.get(u)
             with open(get_file_name(u), "wb") as code:
