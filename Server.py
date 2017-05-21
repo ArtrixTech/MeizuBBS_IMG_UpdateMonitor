@@ -19,8 +19,8 @@ def api_post():
 
             file = Image.open(Fuctions.get_file_name(line))
             width, height = file.size
-            width=str(width*0.2)
-            height=str(height*0.2)
+            width = str(width * 0.2)
+            height = str(height * 0.2)
 
             t += "<p><img src=\"" + line + "\"" + " width=\"" + \
                 width + "\" height=\"" + height + "\"></p>"
@@ -40,8 +40,8 @@ def no_use(rootdir):
 
 
 def start():
-    # app.run(port="5500",host="172.18.204.140")
-    app.run(port="5500", host="192.168.1.251")
+    app.run(port="5500", host="172.18.204.140")
+    # app.run(port="5500", host="192.168.1.251")
 
-t=threading.Thread(target=start)
+t = threading.Thread(target=start)
 t.start()

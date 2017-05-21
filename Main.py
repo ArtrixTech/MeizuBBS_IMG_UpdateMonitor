@@ -1,9 +1,10 @@
 import requests
 import re
 import time
+from Fuctions import get_file_name
 import Server
 import threading
-from Fuctions import get_file_name
+from flask import Flask
 import urllib
 import queue
 
@@ -28,7 +29,6 @@ def cut_string(input_str, head, tail):
 
 
 url_m = "https://bbs.meizu.cn/forum.php?mod=viewthread&tid=6591622&extra=&highlight=%E8%87%AA%E8%A1%8C%E8%BD%A6%E6%B6%82%E8%A3%85&page=1000"
-url_m = "https://bbs.meizu.cn/thread-6616035-999999-1.html"
 
 
 def get_img_url(url):
@@ -50,8 +50,8 @@ print(old_matches)
 while True:
     # 10S delay
     old = time.time()
-    while time.time() - old < 5:
-        pass
+    while time.time() - old < 30:
+        time.sleep(5)
 
     new_matches = get_img_url(url_m)
     new_img = list()
