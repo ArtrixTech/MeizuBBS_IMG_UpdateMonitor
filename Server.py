@@ -12,18 +12,20 @@ app = Flask(__name__)
 @app.route('/')
 def api_post():
 
-    t = "<html> <body>"
+    t = "<!DOCTYPE html>  <html>  <head>  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\" /> </head>  <body>"
 
     with open("new_img", mode="r")as file:
         for line in file.readlines():
 
             file = Image.open(Fuctions.get_file_name(line))
             width, height = file.size
-            width = str(width * 0.2)
-            height = str(height * 0.2)
+            width = str(width * 0.5)
+            height = str(height * 0.5)
 
-            t += "<p><img src=\"" + line + "\"" + " width=\"" + \
-                width + "\" height=\"" + height + "\"></p>"
+            t += "<img src=\"" + line + "\"" + " width=\"" + \
+                width + "\" height=\"" + height + "\"/>"
+
+            t += "<p>\"-----------------\"</p>"
 
     t += "</body></html>"
     return t
@@ -40,8 +42,13 @@ def no_use(rootdir):
 
 
 def start():
-    app.run(port="5500", host="172.18.204.140")
-    # app.run(port="5500", host="192.168.1.251")
+
+    mode = 0
+
+    if mode == 1:
+        app.run(port="5500", host="172.18.204.140")
+    else:
+        app.run(port="5500", host="192.168.1.251")
 
 t = threading.Thread(target=start)
 t.start()

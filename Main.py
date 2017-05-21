@@ -83,5 +83,5 @@ while True:
             u = str(u).replace("\"", "")
 
             r = requests.get(u)
-            with open(get_file_name(u), "wb") as code:
+            with open(get_file_name(u), "a") as code:
                 code.write(r.content)
